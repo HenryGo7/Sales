@@ -7,21 +7,41 @@ import javax.swing.JOptionPane;
 
 import co.com.createSales.dao.CreatePersonDAO;
 import co.com.createSales.dao.CreateProductDAO;
-import co.com.createSales.service.ProductFileServices;
+import co.com.createSales.service.ProductFileService;
 import co.com.createSales.service.SalesManFileService;
 import co.com.createSales.service.SalesMenFileServices;
 
+/**
+ * Clase principal del programa.
+ * Se encarga de solicitar datos al usuario y generar archivos
+ * de vendedores, productos y ventas.
+ * 
+ * @author Henry Gomez
+ * @version 1.0
+ */
 public class GenerateInfoFiles {
 
+    /**
+     * Método principal que ejecuta el flujo del programa.
+     * 
+     * Solicita al usuario:
+     * - Cantidad de vendedores
+     * - Cantidad de productos
+     * - ID del producto
+     * - Cantidad vendida
+     * - Nombre del vendedor
+     * 
+     * Luego genera los archivos correspondientes.
+     * 
+     * @param args argumentos de entrada (no usados)
+     */
 	public static void main(String[] args) {
-		
-		Scanner scanner = new Scanner(System.in);
-		
+				
 		CreatePersonDAO createPersonDAO = new CreatePersonDAO();
 		SalesManFileService salesPersonService = new SalesManFileService(createPersonDAO);
 		
 		CreateProductDAO createProductDAO = new CreateProductDAO();
-		ProductFileServices productFileServices = new ProductFileServices(createProductDAO);
+		ProductFileService productFileServices = new ProductFileService(createProductDAO);
 		
 		SalesMenFileServices salesMenFileServices = new SalesMenFileServices(salesPersonService, productFileServices);
 		
@@ -65,6 +85,12 @@ public class GenerateInfoFiles {
 				Long.parseLong(idProduct));
 	}
 	
+    /**
+     * Valida si el valor ingresado es un número entero.
+     * 
+     * @param input valor a validar
+     * @return true si es número válido, false si no
+     */
 	public static boolean isNumber(String input) {
 	    if (input == null || input.trim().isEmpty()) {
 	        return false;
@@ -78,6 +104,12 @@ public class GenerateInfoFiles {
 	    }
 	}
 	
+    /**
+     * Valida si el valor ingresado es un número tipo Long.
+     * 
+     * @param input valor a validar
+     * @return true si es número válido, false si no
+     */
 	public static boolean isLong(String input) {
 	    if (input == null || input.trim().isEmpty()) {
 	        return false;
