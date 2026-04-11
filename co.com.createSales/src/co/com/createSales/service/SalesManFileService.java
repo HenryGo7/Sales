@@ -1,5 +1,10 @@
 package co.com.createSales.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,19 +49,19 @@ public class SalesManFileService {
      * 
      * @param salesmanCount cantidad de vendedores a crear
      */
-    public void createSalesManInfoFile(int salesmanCount) {        
+    public List<SalesPersonDTO> createSalesManInfoFile(int salesmanCount) {        
         System.out.println("==============================================\n"
-                + "Iniciando la creación de vendedores......");
-        
-        if (salesmanCount <= 0) {
-            System.out.println("La cantidad de vendedores a crear no "
-                    + "puede ser igual o menor a 0");
-            return;
-        }        
+                + "Iniciando la consulta de vendedores......");
         
         // Inicializa la lista de vendedores
         listSalesPersons = new ArrayList<>();
         
+        if (salesmanCount <= 0) {
+            System.out.println("La cantidad de vendedores a crear no "
+                    + "puede ser igual o menor a 0");
+            return listSalesPersons;
+        }        
+                
         int personNumber = 1;
         
         for (int i = 0; i < salesmanCount; i++) {
@@ -75,8 +80,13 @@ public class SalesManFileService {
             listSalesPersons.add(person);
         }
                 
-        System.out.println("Creación de vendedores completada......\n" 
-                + "==============================================");        
+        System.out.println("Consulta de vendedores completada......\n" 
+                + "=============================================="); 
+        
+        generateFile(listSalesPersons);
+
+        
+        return listSalesPersons;
     }
 
     /**
@@ -95,5 +105,51 @@ public class SalesManFileService {
      */
     public void setListSalesPersons(List<SalesPersonDTO> listSalesPersons) {
         this.listSalesPersons = listSalesPersons;
+    }
+    
+    /**
+     * Creación de un archivo de texto con datos de los vendedores.
+     * 
+     * @param listSalesPersons lista de vendedores
+     */
+    public void generateFile(List<SalesPersonDTO> salesPerson) {
+    	
+    	System.out.println("==============================================");
+    	System.out.println("Iniciando generación de archivo de vendedores");
+    	
+    	// Creación de valor fecha y hora para nombre de archivo
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmm");
+    	String dateAndTime = LocalDateTime.now().format(formatter);
+    	    	
+    	// Se define la estructura para el nombre del archivo
+    	String fileName = "salesPerson-" + dateAndTime + ".txt";
+    	Path rute = Paths.get("files/input/salesPerson");
+    	Path ruteFile = rute.resolve(fileName);
+    	
+    	try {
+    		
+    		List<String> lines = new ArrayList<>();
+    		
+    		for (SalesPersonDTO person : salesPerson) {
+    			
+    		String data = person.getDocumentType()
+    				+ ";" + person.getNumberDocument()
+    				+ ";" + person.getName()
+    				+ ";" + person.getLastName();
+    			
+    			lines.add(data);
+    		}    		
+
+    		// Generación del archivo
+    		
+    		Files.createDirectories(rute);
+    		Files.write(ruteFile, lines);
+    		
+    		System.out.println("Archivo " + fileName + " generado correctamente");
+    		System.out.println("==============================================");
+			
+		} catch (Exception e) {
+			System.err.println("Error creando el archivo salesPerson : " + e.getMessage());
+		}    	
     }
 }

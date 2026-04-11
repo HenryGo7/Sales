@@ -1,5 +1,10 @@
 package co.com.createSales.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +51,7 @@ public class ProductFileService {
      */
     public void createProductsInfoFile(int productsCount) {        
         System.out.println("==============================================\n" 
-                + "Iniciando la creación de productos......");
+                + "Iniciando la consulta de productos......");
         
         if (productsCount <= 0) {
             System.out.println("El valor de productos a crear no puede ser "
@@ -70,8 +75,10 @@ public class ProductFileService {
             listSalesProduct.add(product);
         }
                 
-        System.out.println("Creación de productos finalizada......\n" 
-                + "==============================================");        
+        System.out.println("Consulta de productos finalizada......\n" 
+                + "==============================================");     
+        
+        generateFile(listSalesProduct);
     }
 
     /**
@@ -92,5 +99,48 @@ public class ProductFileService {
 		this.listSalesProduct = listSalesProduct;
 	}
     
-    
+    /**
+     * Creación de un archivo de texto con datos de los vendedores.
+     * 
+     * @param listSalesPersons lista de vendedores
+     */
+    public void generateFile(List<ProductDTO> listProduct) {
+    	
+    	System.out.println("==============================================");
+    	System.out.println("Iniciando generación de archivo de productos ");
+    	
+    	// Creación de valor fecha y hora para nombre de archivo
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmm");
+    	String dateAndTime = LocalDateTime.now().format(formatter);
+    	    	
+    	// Se define la estructura para el nombre del archivo
+    	String fileName = "product-" + dateAndTime + ".txt";
+    	Path rute = Paths.get("files/input/product");
+    	Path ruteFile = rute.resolve(fileName);
+    	
+    	try {
+    		
+    		List<String> lines = new ArrayList<>();
+    		
+    		for (ProductDTO product : listProduct) {
+    			
+    		String data = product.getId()
+    				+ ";" + product.getProductName()
+    				+ ";" + product.getPrice();
+    			
+    			lines.add(data);
+    		}    		
+
+    		// Generación del archivo
+    		
+    		Files.createDirectories(rute);
+    		Files.write(ruteFile, lines);
+    		
+    		System.out.println("Archivo " + fileName + " generado correctamente");
+    		System.out.println("==============================================");
+			
+		} catch (Exception e) {
+			System.err.println("Error creando el archivo product : " + e.getMessage());
+		}    	
+    }
 }

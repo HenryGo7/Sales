@@ -55,6 +55,6 @@ public class CreateProductDAO {
      * @return elemento aleatorio del arreglo
      */
     private String randomFrom(String[] array) {
-        return array[ThreadLocalRandom.current().nextInt(array.length)];
+    	return array[ThreadLocalRandom.current().nextInt(array.length)];
     }
 }

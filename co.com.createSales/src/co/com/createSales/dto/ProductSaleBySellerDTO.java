@@ -1,11 +1,13 @@
 package co.com.createSales.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Objeto de transferencia de datos (DTO) que representa el detalle
- * de una venta realizada por un vendedor.
+ * de las ventas realizadas por un vendedor.
  * 
- * Contiene información del producto, el vendedor y los valores
- * asociados a la venta como precio unitario y precio total.
+ * Contiene información del producto y el vendedor
  * 
  * Se utiliza para mostrar o transportar información consolidada
  * de ventas.
@@ -16,20 +18,14 @@ package co.com.createSales.dto;
 public class ProductSaleBySellerDTO {
 
     /** Identificador del producto */
-    private Long idProduct;
+    private String documentType;
     
     /** Número de documento del vendedor */
     private Long documentIdPerson;
     
-    /** Nombre del producto */
-    private String nameProduct;
+    /** Lista de productos asociados a este vendedor */
+    private List<ProductItemDTO> listProductItemDTO;
     
-    /** Precio por unidad del producto */
-    private Double pricePerUnit;
-    
-    /** Precio total de la venta */
-    private Double totalPrice;
-
     /**
      * Constructor vacío.
      */
@@ -46,104 +42,120 @@ public class ProductSaleBySellerDTO {
      * @param pricePerUnit precio por unidad
      * @param totalPrice precio total de la venta
      */
-    public ProductSaleBySellerDTO(Long idProduct, Long documentIdPerson, String nameProduct, Double pricePerUnit,
-            Double totalPrice) {
-        super();
-        this.idProduct = idProduct;
-        this.documentIdPerson = documentIdPerson;
-        this.nameProduct = nameProduct;
-        this.pricePerUnit = pricePerUnit;
-        this.totalPrice = totalPrice;
+    public ProductSaleBySellerDTO(String documentType, Long documentIdPerson, Long idProduct, int salesQuantity) {
+		super();
+		this.documentType = documentType;
+		this.documentIdPerson = documentIdPerson;
+	}
+    
+    public static class ProductItemDTO {
+    	
+        /** Nombre del producto */
+        private Long idProduct;
+        
+        /** Precio por unidad del producto */
+        private int salesQuantity;
+        
+        public ProductItemDTO(Long idProduct, int salesQuantity) {
+        	this.idProduct = idProduct;
+        	this.salesQuantity = salesQuantity;
+        }
+        
+        /**
+         * Obtiene el id del producto.
+         * 
+         * @return id del producto
+         */
+    	public Long getIdProduct() {
+    		return idProduct;
+    	}
+
+        /**
+         * Asigna el id del producto
+         * 
+         * @param idProduct id del producto
+         */
+    	public void setIdProduct(Long idProduct) {
+    		this.idProduct = idProduct;
+    	}
+
+        /**
+         * Obtiene la cantidad vendida
+         * 
+         * @return precio por unidad
+         */
+    	public int getSalesQuantity() {
+    		return salesQuantity;
+    	}
+
+    	/**
+         * Asigna ela cantidad de la venta
+         * 
+         * @param salesQuantity cantidad de venta
+         */
+    	public void setSalesQuantity(int salesQuantity) {
+    		this.salesQuantity = salesQuantity;
+    	}
+    	
+    	@Override
+    	public String toString() {
+    		return "ProductItemDTO [idProduct = " + idProduct + ", salesQuantity " + salesQuantity + "]";
+    	}
     }
 
     /**
-     * Obtiene el id del producto.
+     * Obtiene el tipo de documento del vendedor.
      * 
-     * @return id del producto
+     * @return tipo de documento
      */
-    public Long getIdProduct() {
-        return idProduct;
-    }
+	public String getDocumentType() {
+		return documentType;
+	}
 
-    /**
-     * Asigna el id del producto.
+	/**
+     * Asigna el tipo de documento del vendedor.
      * 
-     * @param idProduct id del producto
+     * @param documentType del vendedor
      */
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
-    }
+	public void setDocumentType(String documentType) {
+		this.documentType = documentType;
+	}
 
-    /**
+	   /**
      * Obtiene el documento del vendedor.
      * 
      * @return documento del vendedor
      */
-    public Long getDocumentIdPerson() {
-        return documentIdPerson;
-    }
+	public Long getDocumentIdPerson() {
+		return documentIdPerson;
+	}
 
     /**
      * Asigna el documento del vendedor.
      * 
      * @param documentIdPerson documento del vendedor
      */
-    public void setDocumentIdPerson(Long documentIdPerson) {
-        this.documentIdPerson = documentIdPerson;
+	public void setDocumentIdPerson(Long documentIdPerson) {
+		this.documentIdPerson = documentIdPerson;
+	}
+	
+	public List<ProductItemDTO> getListProductItemDTO() {
+        return listProductItemDTO;
     }
 
-    /**
-     * Obtiene el nombre del producto.
-     * 
-     * @return nombre del producto
-     */
-    public String getNameProduct() {
-        return nameProduct;
+    public void setSalesItems(List<ProductItemDTO> listProductItemDTO) {
+        this.listProductItemDTO = listProductItemDTO;
     }
-
+    
     /**
-     * Asigna el nombre del producto.
-     * 
-     * @param nameProduct nombre del producto
+     * Método utilitario para añadir un producto a la lista.
      */
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    /**
-     * Obtiene el precio por unidad.
-     * 
-     * @return precio por unidad
-     */
-    public Double getPricePerUnit() {
-        return pricePerUnit;
-    }
-
-    /**
-     * Asigna el precio por unidad.
-     * 
-     * @param pricePerUnit precio por unidad
-     */
-    public void setPricePerUnit(Double pricePerUnit) {
-        this.pricePerUnit = pricePerUnit;
-    }
-
-    /**
-     * Obtiene el precio total de la venta.
-     * 
-     * @return precio total
-     */
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    /**
-     * Asigna el precio total de la venta.
-     * 
-     * @param totalPrice precio total
-     */
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void addSaleItem(Long idProduct, int quantity) {
+    	if (this.listProductItemDTO == null) {
+            this.listProductItemDTO = new ArrayList<>();
+        }
+    	
+        this.listProductItemDTO.add(new ProductItemDTO(idProduct, quantity));
     }
 
     /**
@@ -151,10 +163,8 @@ public class ProductSaleBySellerDTO {
      * 
      * @return información de la venta
      */
-    @Override
-    public String toString() {
-        return "ProductSaleBySelleDTO [idProduct=" + idProduct + ", documentIdPerson=" + documentIdPerson
-                + ", nameProduct=" + nameProduct + ", pricePerUnit=" + pricePerUnit + ", totalPrice=" + totalPrice
-                + "]";
-    }
+	@Override
+	public String toString() {
+		return "ProductSaleBySellerDTO [documentType=" + documentType + ", documentIdPerson=" + documentIdPerson + " ]";
+	}
 }

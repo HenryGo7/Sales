@@ -1,12 +1,11 @@
 package co.com.createSales.main;
 
-
-import java.util.Scanner;
-
-import javax.swing.JOptionPane;
+import java.util.List;
+import java.util.Random;
 
 import co.com.createSales.dao.CreatePersonDAO;
 import co.com.createSales.dao.CreateProductDAO;
+import co.com.createSales.dto.SalesPersonDTO;
 import co.com.createSales.service.ProductFileService;
 import co.com.createSales.service.SalesManFileService;
 import co.com.createSales.service.SalesMenFileServices;
@@ -45,44 +44,24 @@ public class GenerateInfoFiles {
 		
 		SalesMenFileServices salesMenFileServices = new SalesMenFileServices(salesPersonService, productFileServices);
 		
-		String numberSellers = JOptionPane.showInputDialog("Ingrese la cantidad de vendedores");
+		int numberSellers = 8;
 		
-		if (!isNumber(numberSellers)) {
-			System.out.println("Debe ingresar un valor numerico");
-			return;
+		List<SalesPersonDTO> listSalesPersons = salesPersonService.createSalesManInfoFile(numberSellers);
+		
+		int numberProducts = 10;
+		
+		productFileServices.createProductsInfoFile(numberProducts);
+		
+		for (SalesPersonDTO salesPersonData : listSalesPersons) {	
+			
+			Random random = new Random();
+			int randomValue = random.nextInt(10) + 1;			
+			
+			salesMenFileServices.createSalesMenFile(
+					randomValue,
+					salesPersonData.getName() , 
+					salesPersonData.getNumberDocument());
 		}
-		
-		salesPersonService.createSalesManInfoFile(Integer.parseInt(numberSellers));
-		
-		String numberProducts = JOptionPane.showInputDialog("Ingrese la cantidad de productos");
-		
-		if (!isNumber(numberProducts)) {
-			System.out.println("Debe ingresar un valor numerico");
-			return;
-		}
-		
-		productFileServices.createProductsInfoFile(Integer.parseInt(numberProducts));
-		
-		String idProduct = JOptionPane.showInputDialog("Ingrese el id de producto");
-		
-		if (!isLong(idProduct)) {
-			System.out.println("Debe ingresar un valor numerico");
-			return;
-		}
-		
-		String salesQuantity = JOptionPane.showInputDialog("Ingrese la cantidad de venta realizada");
-		
-		if (!isNumber(salesQuantity)) {
-			System.out.println("Debe ingresar un valor numerico");
-			return;
-		}
-						
-		String sellerName = JOptionPane.showInputDialog("Ingrese el nombre del vendedor");
-		
-		salesMenFileServices.createSalesMenFile(
-				Integer.parseInt(salesQuantity),
-				sellerName , 
-				Long.parseLong(idProduct));
 	}
 	
     /**
