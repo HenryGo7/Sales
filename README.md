@@ -172,12 +172,6 @@ Estos métodos generan archivos pseudoaleatorios para pruebas del sistema.
 
 ---
 
-## 👨‍💻 Autor
-
-Henry Gomez
-
----
-
 ## 📚 Conclusión
 
 Este proyecto permite aplicar conceptos fundamentales de programación como:
