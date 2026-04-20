@@ -8,7 +8,7 @@ import co.com.createSales.dao.CreateProductDAO;
 import co.com.createSales.dto.SalesPersonDTO;
 import co.com.createSales.service.ProductFileService;
 import co.com.createSales.service.SalesManFileService;
-import co.com.createSales.service.SalesMenFileServices;
+import co.com.createSales.service.SalesMenFileService;
 
 /**
  * Clase principal del programa.
@@ -42,7 +42,7 @@ public class GenerateInfoFiles {
 		CreateProductDAO createProductDAO = new CreateProductDAO();
 		ProductFileService productFileServices = new ProductFileService(createProductDAO);
 		
-		SalesMenFileServices salesMenFileServices = new SalesMenFileServices(salesPersonService, productFileServices);
+		SalesMenFileService salesMenFileServices = new SalesMenFileService(salesPersonService, productFileServices);
 		
 		int numberSellers = 8;
 		

@@ -1,0 +1,10 @@
+1690;Mouse;309.49
+1670;Printer;317.32
+1539;Monitor;499.72
+1167;Smartwatch;335.18
+1290;Keyboard;265.3
+1176;Laptop;332.7
+1649;Headphones;804.45
+1277;Headphones;576.3
+1098;Smartwatch;459.52
+1028;Tablet;575.79

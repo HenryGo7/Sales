@@ -1,0 +1,10 @@
+1579;Smartphone;683.91
+1711;Keyboard;800.11
+1648;Speaker;167.2
+1916;Smartphone;231.14
+1689;Monitor;845.91
+1246;Keyboard;366.33
+1568;Mouse;439.57
+1025;Headphones;401.64
+1611;Smartphone;878.63
+1504;Mouse;508.1

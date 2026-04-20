@@ -1,0 +1,8 @@
+CC;1374471;Maria;Valencia
+CE;863481;Juan;Rodriguez
+CE;459523;Ana;Perez
+CC;988924;Sofia;Gomez
+CC;1873657;Mateo;Lopez
+CE;1597530;Andres;Rodriguez
+CC;1938412;Mateo;Rodriguez
+CE;441974;Mateo;Hernandez

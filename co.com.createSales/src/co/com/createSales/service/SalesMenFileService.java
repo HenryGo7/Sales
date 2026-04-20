@@ -26,7 +26,7 @@ import co.com.createSales.dto.SalesPersonDTO;
  * @author Henry Gomez
  * @version 1.0
  */
-public class SalesMenFileServices {
+public class SalesMenFileService {
     
     private final ProductFileService productFileServices;
     
@@ -38,7 +38,7 @@ public class SalesMenFileServices {
      * @param salesManFileService servicio de vendedores
      * @param productFileServices servicio de productos
      */
-    public SalesMenFileServices(SalesManFileService salesManFileService, ProductFileService productFileServices) {
+    public SalesMenFileService(SalesManFileService salesManFileService, ProductFileService productFileServices) {
         this.productFileServices = productFileServices;
         this.salesManFileService = salesManFileService;
     }
@@ -153,7 +153,7 @@ public class SalesMenFileServices {
                 .append("\n");
     		});
     		
-    		data = data + dataBuilder;
+    		data = data + "\n" + dataBuilder;
     				
     		List<String> lines = Collections.singletonList(data);
     		

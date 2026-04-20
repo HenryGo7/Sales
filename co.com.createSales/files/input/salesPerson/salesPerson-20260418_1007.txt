@@ -1,0 +1,8 @@
+CE;1655358;Ana;Valencia
+CC;1571209;Pedro;Perez
+CC;1063686;Juan;Valencia
+CE;339368;Carlos;Garcia
+CE;619759;Andres;Perez
+CC;938693;Valentina;Rodriguez
+CC;1846979;Pedro;Gomez
+CC;531835;Pedro;Martinez

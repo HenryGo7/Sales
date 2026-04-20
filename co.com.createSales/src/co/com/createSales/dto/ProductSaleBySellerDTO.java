@@ -55,13 +55,17 @@ public class ProductSaleBySellerDTO {
         
         /** Precio por unidad del producto */
         private int salesQuantity;
-        
-        public ProductItemDTO(Long idProduct, int salesQuantity) {
+                        
+        public ProductItemDTO() {
+			super();
+		}
+
+		public ProductItemDTO(Long idProduct, int salesQuantity) {
         	this.idProduct = idProduct;
         	this.salesQuantity = salesQuantity;
         }
         
-        /**
+		/**
          * Obtiene el id del producto.
          * 
          * @return id del producto
